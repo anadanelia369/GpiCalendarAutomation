@@ -94,10 +94,10 @@ base.url=https://mygpi.ge/ka-GE/mg-purchase/travel/policy
 
 ## A few things I learned while building this
 
-- The date input field is `readonly`, so I had to select dates by clicking on the calendar instead of typing them.
-- Selecting a date makes the page take 6-7 seconds to load, so I used Explicit Wait everywhere instead of a fixed sleep time.
-- The site's calendar looked different from what was shown in class, so I re-checked everything directly in the browser instead of trusting my old notes.
-- A few of my early tests failed randomly (not every run) because I was missing a wait in one specific method. I found this by running the same test several times in a row until I saw it fail, then fixed the one line that was missing a wait.
+- The date input field is `readonly`, so dates have to be selected by clicking on the calendar, not typed in.
+- Selecting a date takes the page 6-7 seconds to load, so I used Explicit Wait everywhere instead of a fixed sleep time.
+- The site's calendar had changed since I wrote my manual test cases for it earlier in the course, so I double-checked everything myself in the browser instead of trusting my old notes.
+- I caught a test that only failed sometimes (not every run) by running it several times in a row until it failed, traced it to a missing wait in one method, and fixed it. It's been stable ever since.
 
 ## Author
 
