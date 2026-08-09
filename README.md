@@ -1,28 +1,18 @@
 # GPI Calendar Automation
 
-A test automation project for the travel insurance calendar on [mygpi.ge](https://mygpi.ge/ka-GE/mg-purchase/travel/policy). This is my final project for the Quality Academy Java/Selenium course.
-
-## What this project does
-
-The project tests the date-range calendar that users interact with when buying travel insurance. It covers 5 UI test scenarios (opening the calendar, selecting dates, validation, navigation, and page refresh — 6 test methods in total, since one scenario is split into two checks) plus 1 API test case using RestAssured. That's 7 automated tests in total, all passing.
+Test automation for the travel-insurance calendar on [mygpi.ge](https://mygpi.ge/ka-GE/mg-purchase/travel/policy) — my final project for the Quality Academy Java/Selenium course. I'd already written manual test cases for this same calendar in an earlier manual QA course (finished January 2026) — see them in my [QA portfolio](https://github.com/anadanelia369/QA-Portfolio#gpi-holding--20-test-cases) — and this project automates 5 of those scenarios, plus one API test.
 
 ![Test Report Screenshot](docs/report-screenshot.png)
 
+7 automated tests in total (6 UI methods + 1 API), all passing.
+
 ## Tech Stack
 
-- Java 21
-- Maven
-- Selenium WebDriver 4.45.0
-- WebDriverManager 6.3.4
-- TestNG 7.12.0
-- RestAssured 6.0.1
-- ExtentReports 5.1.2
+Java 21 · Maven · Selenium WebDriver 4.45.0 · WebDriverManager 6.3.4 · TestNG 7.12.0 · RestAssured 6.0.1 · ExtentReports 5.1.2
 
 ## Design Pattern
 
-I used **Page Object Model (POM) with PageFactory**. Each page of the site (the calendar page, the "insured details" page) has its own class with locators and actions. The test classes only call these actions and check the results — they don't touch locators directly.
-
-I chose POM over BDD/Cucumber because it let me build and test each case faster within my timeline.
+Page Object Model (POM) with PageFactory — each page (calendar, "insured details") has its own class for locators and actions, and the test classes only call those actions. I chose POM over BDD/Cucumber to move faster within the timeline.
 
 ## Project Structure
 
@@ -31,26 +21,14 @@ GpiCalendarAutomation/
 ├── pom.xml
 ├── testNG.xml
 ├── config.properties
-├── report/
-│   └── ExtentReport.html
+├── report/ExtentReport.html
 └── src/
     ├── main/java/org/example/
-    │   ├── pages/
-    │   │   ├── CalendarPage.java
-    │   │   └── InsuredDetailsPage.java
-    │   ├── utils/
-    │   │   ├── ApiClient.java
-    │   │   ├── ConfigReader.java
-    │   │   ├── DriverManager.java
-    │   │   ├── ExtentReportManager.java
-    │   │   ├── TestListener.java
-    │   │   └── Utils.java
+    │   ├── pages/          (CalendarPage, InsuredDetailsPage)
+    │   ├── utils/           (ApiClient, ConfigReader, DriverManager, ExtentReportManager, TestListener, Utils)
     │   └── BasePage.java
-    │
     └── test/java/org/example/
-        ├── Tests/
-        │   ├── ApiTest.java
-        │   └── CalendarTest.java
+        ├── Tests/            (ApiTest, CalendarTest)
         └── BaseTest.java
 ```
 
@@ -58,18 +36,24 @@ GpiCalendarAutomation/
 
 | # | Test Case | Type | What it checks |
 |---|---|---|---|
-| 1 | Calendar opens on click | Positive | The calendar opens when I click the date field, and it shows the correct current month and today's date |
-| 2 | Select a date range | Positive | I can select a start and end date, the input fills in correctly, and clicking "Continue" moves me to the next step |
-| 3 | Empty period shows an error | Negative | If I click "Continue" without picking any dates, I see the validation error message |
-| 4 | Dates stay after Back navigation | Positive | If I go to the next step and then click "Back", my selected dates are still there |
-| 5 | Page refresh clears the dates | Edge case | If I refresh the page after selecting dates, the calendar resets to empty |
-| API | GET request check | Positive | A GET request to reqres.in returns status code 200 |
+| 1 | Calendar opens on click | Positive | Calendar opens on click and shows the correct current month and today's date |
+| 2 | Select a date range | Positive | Start/end dates fill the input correctly and "Continue" moves to the next step |
+| 3 | Empty period shows an error | Negative | Clicking "Continue" with no dates shows the validation message |
+| 4 | Dates stay after Back navigation | Positive | Going to the next step and back keeps the selected dates |
+| 5 | Page refresh clears the dates | Edge case | Refreshing after selecting dates resets the calendar |
+| API | GET request check | Positive | GET to reqres.in returns status 200 |
 
-## Why I picked these cases
+**Why these cases:** together they cover the calendar's basic flow — open, use correctly, use incorrectly, and leave/return two different ways (Back keeps dates, Refresh clears them, so it's worth testing both). I skipped rapid-clicking since Selenium can't easily copy real human click timing. Dates are generated dynamically (`LocalDate.now()`) so the tests keep working regardless of when they run.
 
-I wanted the 5 UI cases to cover the whole basic flow of the calendar — opening it, using it correctly, using it incorrectly, and checking what happens when you navigate away and back. I picked "Back navigation" and "Page refresh" together on purpose, because they test two different ways of leaving the page, and they actually behave differently (Back keeps your dates, Refresh clears them). I decided not to test rapid clicking, because Selenium can't reliably copy how fast a real person clicks, so that test would not have given trustworthy results.
+## Prerequisites
 
-I used dynamic dates (`LocalDate.now()`) everywhere instead of fixed dates, so the tests keep working no matter what day they are run.
+Java 21, Maven, and Google Chrome installed.
+
+## Setup
+
+1. Clone or download this repo
+2. Open it in IntelliJ (or any Maven-aware IDE) and let Maven fetch the dependencies in `pom.xml`
+3. Check that `config.properties` (project root) has the right values — see Configuration below
 
 ## How to Run
 
@@ -77,27 +61,24 @@ I used dynamic dates (`LocalDate.now()`) everywhere instead of fixed dates, so t
 mvn clean test
 ```
 
-This uses `testNG.xml` to decide which tests to run. After the run finishes, open the report here:
-
-```
-report/ExtentReport.html
-```
+Runs the suite defined in `testNG.xml`. Report opens at `report/ExtentReport.html` afterward.
 
 ## Configuration
 
-`config.properties` is in the project's root folder:
+`config.properties` (project root):
 
 ```properties
 wait=10
 base.url=https://mygpi.ge/ka-GE/mg-purchase/travel/policy
 ```
 
-## A few things I learned while building this
+## A few things I learned
 
-- The date input field is `readonly`, so dates have to be selected by clicking on the calendar, not typed in.
-- Selecting a date takes the page 6-7 seconds to load, so I used Explicit Wait everywhere instead of a fixed sleep time.
-- The site's calendar had changed since I wrote my manual test cases for it earlier in the course, so I double-checked everything myself in the browser instead of trusting my old notes.
-- I caught a test that only failed sometimes (not every run) by running it several times in a row until it failed, traced it to a missing wait in one method, and fixed it. It's been stable ever since.
+- The date input is `readonly`, so dates are selected by clicking the calendar, not typed.
+- The page's load time after selecting a date wasn't consistent (it depends on things like whether you're logged in), so instead of guessing a fixed number, I used Explicit Wait — it only waits as long as the element actually needs, up to a max timeout set in `config.properties`.
+- The calendar UI had changed since I wrote my manual test cases, so I re-checked everything in the browser instead of trusting my old notes.
+- The site formats dates in Georgian ("11 აგვ, 2026") — I learned Java's `Locale` class (`new Locale("ka")`) can match that.
+- I caught a test that only failed sometimes by re-running it until it failed, traced it to a missing wait, and fixed it — stable ever since.
 
 ## Author
 

@@ -42,9 +42,8 @@ public class CalendarTest extends BaseTest {
         Locale georgian = new Locale("ka");
         String expectedText = startDate.format(DateTimeFormatter.ofPattern("dd MMM, yyyy", georgian))
                 + " - " + endDate.format(DateTimeFormatter.ofPattern("dd MMM, yyyy", georgian));
-
         Assert.assertEquals(calendarPage.getDateRangeText(), expectedText);
-        Assert.assertTrue(startDate.isBefore(endDate), "Start date should be before end date");
+
 
         calendarPage.clickContinue();
         calendarPage.waitForUrlToContain("travellers");
