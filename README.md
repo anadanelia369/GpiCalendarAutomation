@@ -1,10 +1,10 @@
 # GPI Calendar Automation
 
-Test automation for the travel-insurance calendar on [mygpi.ge](https://mygpi.ge/ka-GE/mg-purchase/travel/policy) — my final project for the Quality Academy Java/Selenium course. I'd already written manual test cases for this same calendar in an earlier manual QA course (finished January 2026) — see them in my [QA portfolio](https://github.com/anadanelia369/QA-Portfolio#gpi-holding--20-test-cases) — and this project automates 5 of those scenarios, plus one API test.
+Test automation for the travel-insurance calendar on [mygpi.ge](https://mygpi.ge/ka-GE/mg-purchase/travel/policy) — my final project for the Quality Academy Java/Selenium course. I'd already written manual test cases for this same calendar in an earlier manual QA course (finished January 2026) — see them in my [QA portfolio](https://github.com/anadanelia369/QA-Portfolio#gpi-holding--20-test-cases) — and this project automates 6 of those scenarios, plus 1 API test.
 
 ![Test Report Screenshot](docs/report-screenshot.png)
 
-7 automated tests in total (6 UI methods + 1 API), all passing.
+7 automated tests in total (6 UI + 1 API), all passing.
 
 ## Tech Stack
 
@@ -36,11 +36,12 @@ GpiCalendarAutomation/
 
 | # | Test Case | Type | What it checks |
 |---|---|---|---|
-| 1 | Calendar opens on click | Positive | Calendar opens on click and shows the correct current month and today's date |
-| 2 | Select a date range | Positive | Start/end dates fill the input correctly and "Continue" moves to the next step |
-| 3 | Empty period shows an error | Negative | Clicking "Continue" with no dates shows the validation message |
-| 4 | Dates stay after Back navigation | Positive | Going to the next step and back keeps the selected dates |
-| 5 | Page refresh clears the dates | Edge case | Refreshing after selecting dates resets the calendar |
+| 1 | Calendar shows the current period | Positive | Clicking the input opens the calendar and it shows the correct current month |
+| 2 | Calendar highlights today | Positive | Today's date is visually highlighted when the calendar opens |
+| 3 | Select a date range | Positive | Start/end dates fill the input correctly and "Continue" moves to the next step |
+| 4 | Empty period shows an error | Negative | Clicking "Continue" with no dates shows the validation message |
+| 5 | Dates stay after Back navigation | Positive | Going to the next step and back keeps the selected dates |
+| 6 | Page refresh clears the dates | Edge case | Refreshing after selecting dates resets the calendar |
 | API | GET request check | Positive | GET to reqres.in returns status 200 |
 
 **Why these cases:** together they cover the calendar's basic flow — open, use correctly, use incorrectly, and leave/return two different ways (Back keeps dates, Refresh clears them, so it's worth testing both). I skipped rapid-clicking since Selenium can't easily copy real human click timing. Dates are generated dynamically (`LocalDate.now()`) so the tests keep working regardless of when they run.
