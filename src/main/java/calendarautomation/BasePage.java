@@ -1,7 +1,9 @@
-package org.example;
+package calendarautomation;
 
-import org.example.utils.ConfigReader;
-import org.example.utils.Utils;
+import calendarautomation.utils.ConfigReader;
+import calendarautomation.utils.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -10,6 +12,8 @@ import java.time.Duration;
 
 public class BasePage {
 
+    private static final Logger logger = LogManager.getLogger(BasePage.class);
+
     protected WebDriver driver;
     protected WebDriverWait wait;
 
@@ -17,27 +21,29 @@ public class BasePage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigReader.getLong("wait")));
         PageFactory.initElements(driver, this);
-
     }
+
     public void sendKeys(WebElement locator, String text) {
         locator.clear();
         Utils.logInfo("Locator [" + locator + "] is cleared");
+        logger.debug("Clearing locator: {}", locator);
+
         locator.sendKeys(text);
         Utils.logInfo("Send KEy: " + text);
+        logger.info("Sent keys '{}' to locator: {}", text, locator);
     }
 
     public void click(WebElement locator) {
         locator.click();
         Utils.logInfo("click to: " + locator);
+        logger.info("Clicked on locator: {}", locator);
     }
 
     public String getText(WebElement locator) {
-        Utils.logInfo("returned Text: " + locator.getText());
-        return locator.getText();
-    }
-
-    public String getCssValue(WebElement locator, String propertyName) {
-        return locator.getCssValue(propertyName);
+        String text = locator.getText();
+        Utils.logInfo("returned Text: " + text);
+        logger.debug("Retrieved text '{}' from locator: {}", text, locator);
+        return text;
     }
 
 }
