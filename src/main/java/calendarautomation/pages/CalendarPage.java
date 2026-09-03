@@ -1,6 +1,6 @@
-package org.example.pages;
+package calendarautomation.pages;
 
-import org.example.BasePage;
+import calendarautomation.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,36 +10,32 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class CalendarPage extends BasePage {
-
-
     @FindBy(id = "gpi-date-range-policy-input")
     private WebElement dateRangeInput;
 
-    @FindBy(css = ".mg-input-error-message")
+    @FindBy(xpath = "//*[contains(@class, 'mg-input-error-message')]")
     private WebElement validationMessage;
 
-    @FindBy(css = ".mat-calendar-period-button .mdc-button__label")
+    @FindBy(xpath = "//button[contains(@class, 'mat-calendar-period-button')]//span[contains(@class, 'mdc-button__label')]")
     private WebElement calendarPeriodLabel;
 
-    @FindBy(css = ".mat-calendar-body-today")
-    private WebElement todayCell;
-
-    @FindBy(css = ".mg-wizard-nav-button.primary")
+    @FindBy(xpath = "//*[contains(@class, 'mg-wizard-nav-button') and contains(@class, 'primary')]")
     private WebElement continueButton;
 
-    @FindBy(css = "img[alt='close icon']")
+    @FindBy(xpath = "//img[@alt='close icon']")
     private WebElement closeModalButton;
 
-    @FindBy(css = "mg-date-range-control")
+    @FindBy(xpath = "//mg-date-range-control")
     private WebElement dateRangeControl;
+
 
     public CalendarPage(WebDriver driver) {
         super(driver);
     }
 
     private By dateLocator(LocalDate date) {
-        String formattedDate = date.format(DateTimeFormatter.ofPattern("M/d/yyyy"));
-        return By.cssSelector("[aria-label='" + formattedDate + "']");
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return By.xpath("//button[@aria-label='" + formattedDate + "']");
     }
 
     public void openCalendar() {
@@ -53,9 +49,11 @@ public class CalendarPage extends BasePage {
     }
 
     public boolean isTodayHighlighted() {
+        WebElement todayCell = driver.findElement(dateLocator(LocalDate.now()));
         wait.until(ExpectedConditions.visibilityOf(todayCell));
-        return todayCell.getAttribute("class").contains("mat-calendar-body-today");
+        return "date".equals(todayCell.getAttribute("aria-current"));
     }
+
 
     public void selectDate(LocalDate date) {
         By locator = dateLocator(date);
