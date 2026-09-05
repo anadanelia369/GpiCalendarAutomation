@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
@@ -35,5 +36,7 @@ public class BasePage {
         logger.debug("Retrieved text '{}' from locator: {}", text, locator);
         return text;
     }
-
+    protected void waitForVisibility(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 }
