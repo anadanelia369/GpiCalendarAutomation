@@ -23,16 +23,6 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void sendKeys(WebElement locator, String text) {
-        locator.clear();
-        Utils.logInfo("Locator [" + locator + "] is cleared");
-        logger.debug("Clearing locator: {}", locator);
-
-        locator.sendKeys(text);
-        Utils.logInfo("Send KEy: " + text);
-        logger.info("Sent keys '{}' to locator: {}", text, locator);
-    }
-
     public void click(WebElement locator) {
         locator.click();
         Utils.logInfo("click to: " + locator);
