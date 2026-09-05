@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
+
 public class CalendarPage extends BasePage {
     @FindBy(id = "gpi-date-range-policy-input")
     private WebElement dateRangeInput;
@@ -39,18 +41,18 @@ public class CalendarPage extends BasePage {
     }
 
     public void openCalendar() {
-        wait.until(ExpectedConditions.visibilityOf(dateRangeInput));
+        waitForVisibility(dateRangeInput);
         click(dateRangeInput);
     }
 
     public String getCurrentPeriodLabel() {
-        wait.until(ExpectedConditions.visibilityOf(calendarPeriodLabel));
+        waitForVisibility(calendarPeriodLabel);
         return getText(calendarPeriodLabel);
     }
 
     public boolean isTodayHighlighted() {
         WebElement todayCell = driver.findElement(dateLocator(LocalDate.now()));
-        wait.until(ExpectedConditions.visibilityOf(todayCell));
+        waitForVisibility(todayCell);
         return "date".equals(todayCell.getAttribute("aria-current"));
     }
 
@@ -62,36 +64,35 @@ public class CalendarPage extends BasePage {
     }
 
     public String getDateRangeText() {
-        wait.until(ExpectedConditions.visibilityOf(dateRangeInput));
+        waitForVisibility(dateRangeInput);
         return dateRangeInput.getAttribute("value");
     }
 
     public void clickContinue() {
-        wait.until(ExpectedConditions.visibilityOf(continueButton));
+        waitForVisibility(continueButton);
         click(continueButton);
     }
 
     public void closeInsuredModal() {
-        wait.until(ExpectedConditions.visibilityOf(closeModalButton));
+        waitForVisibility(closeModalButton);
         click(closeModalButton);
     }
-
     public void waitForUrlToContain(String partialUrl) {
         wait.until(ExpectedConditions.urlContains(partialUrl));
     }
 
     public String getValidationMessageText() {
-        wait.until(ExpectedConditions.visibilityOf(validationMessage));
+        waitForVisibility(validationMessage);
         return getText(validationMessage);
     }
 
     public void refreshPage() {
         driver.navigate().refresh();
-        wait.until(ExpectedConditions.visibilityOf(dateRangeInput));
+        waitForVisibility(dateRangeInput);
     }
 
     public boolean isDateRangeInvalid() {
-        wait.until(ExpectedConditions.visibilityOf(dateRangeControl));
+        waitForVisibility(dateRangeControl);
         return dateRangeControl.getAttribute("class").contains("ng-invalid");
     }
-}
+    }
