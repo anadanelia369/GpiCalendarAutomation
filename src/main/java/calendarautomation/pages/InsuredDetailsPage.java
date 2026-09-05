@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class InsuredDetailsPage extends BasePage {
 
-    @FindBy(css = ".mg-wizard-nav-button.secondary")
+    @FindBy(xpath = "//*[contains(@class, 'mg-wizard-nav-button') and contains(@class, 'secondary')]")
     private WebElement backButton;
 
     public InsuredDetailsPage(WebDriver driver) {
