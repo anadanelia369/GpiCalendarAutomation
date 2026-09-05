@@ -1,8 +1,8 @@
-package org.example.Tests;
+package calendarautomation.Tests;
 
-import org.example.BaseTest;
-import org.example.pages.CalendarPage;
-import org.example.pages.InsuredDetailsPage;
+import calendarautomation.BaseTest;
+import calendarautomation.pages.CalendarPage;
+import calendarautomation.pages.InsuredDetailsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,8 +17,13 @@ public class CalendarTest extends BaseTest {
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.openCalendar();
 
-        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy"));
-        Assert.assertEquals(calendarPage.getCurrentPeriodLabel(), expectedDate);
+        String expectedPeriod = LocalDate.now()
+                .format(DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH))
+                .toUpperCase();
+        Assert.assertEquals(calendarPage.getCurrentPeriodLabel(), expectedPeriod);
+
+//        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy"));
+//        Assert.assertEquals(calendarPage.getCurrentPeriodLabel(), expectedDate);
     }
 
     @Test(groups = "positive", priority = 2)

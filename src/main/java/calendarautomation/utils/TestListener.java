@@ -1,4 +1,4 @@
-package org.example.utils;
+package calendarautomation.utils;
 
 import org.testng.ITestContext;
 import org.testng.ITestListener;

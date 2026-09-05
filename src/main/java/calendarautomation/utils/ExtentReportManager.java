@@ -1,4 +1,4 @@
-package org.example.utils;
+package calendarautomation.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;

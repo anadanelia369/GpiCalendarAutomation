@@ -1,6 +1,6 @@
-package org.example.pages;
+package calendarautomation.pages;
 
-import org.example.BasePage;
+import calendarautomation.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

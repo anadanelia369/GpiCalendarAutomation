@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="GpiCalendarSuite">
     <listeners>
-        <listener class-name="org.example.utils.TestListener"/>
+        <listener class-name="calendarautomation.utils.TestListener"/>
     </listeners>
     <test name="CalendarTests">
         <classes>
-            <class name="org.example.Tests.CalendarTest"/>
-            <class name="org.example.Tests.ApiTest"/>
+            <class name="calendarautomation.Tests.CalendarTest"/>
+            <class name="calendarautomation.Tests.ApiTest"/>
         </classes>
     </test>
 </suite>

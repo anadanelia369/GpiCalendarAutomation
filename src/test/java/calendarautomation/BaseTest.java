@@ -1,7 +1,7 @@
-package org.example;
+package calendarautomation;
 
-import org.example.utils.ConfigReader;
-import org.example.utils.DriverManager;
+import calendarautomation.utils.ConfigReader;
+import calendarautomation.utils.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

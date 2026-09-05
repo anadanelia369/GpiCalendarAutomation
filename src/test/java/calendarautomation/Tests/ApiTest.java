@@ -1,7 +1,7 @@
-package org.example.Tests;
+package calendarautomation.Tests;
 
 import io.restassured.response.Response;
-import org.example.utils.ApiClient;
+import calendarautomation.utils.ApiClient;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

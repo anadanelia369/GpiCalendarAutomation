@@ -1,4 +1,4 @@
-package org.example.utils;
+package calendarautomation.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

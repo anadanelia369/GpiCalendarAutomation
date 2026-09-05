@@ -1,4 +1,4 @@
-package org.example.utils;
+package calendarautomation.utils;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

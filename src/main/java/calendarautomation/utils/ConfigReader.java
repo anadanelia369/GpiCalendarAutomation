@@ -1,4 +1,4 @@
-package org.example.utils;
+package calendarautomation.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
