@@ -30,6 +30,9 @@ public class CalendarPage extends BasePage {
     @FindBy(xpath = "//mg-date-range-control")
     private WebElement dateRangeControl;
 
+    @FindBy(xpath = "//button[@aria-label='Next month']")
+    private WebElement nextMonthButton;
+
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -59,8 +62,11 @@ public class CalendarPage extends BasePage {
 
     public void selectDate(LocalDate date) {
         By locator = dateLocator(date);
-        WebElement dateCell = driver.findElement(locator);
-        click(dateCell);
+        if (driver.findElements(locator).isEmpty()) {
+            click(nextMonthButton);
+        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        click(driver.findElement(locator));
     }
 
     public String getDateRangeText() {
