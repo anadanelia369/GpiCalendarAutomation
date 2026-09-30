@@ -5,7 +5,6 @@ import calendarautomation.pages.CalendarPage;
 import calendarautomation.pages.InsuredDetailsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -21,9 +20,6 @@ public class CalendarTest extends BaseTest {
                 .format(DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH))
                 .toUpperCase();
         Assert.assertEquals(calendarPage.getCurrentPeriodLabel(), expectedPeriod);
-
-//        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy"));
-//        Assert.assertEquals(calendarPage.getCurrentPeriodLabel(), expectedDate);
     }
 
     @Test(groups = "positive", priority = 2)
