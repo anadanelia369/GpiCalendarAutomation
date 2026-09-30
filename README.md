@@ -8,7 +8,7 @@ Test automation for the travel-insurance calendar on [mygpi.ge](https://mygpi.ge
 
 ## Tech Stack
 
-Java 21 · Maven · Selenium WebDriver 4.45.0 · WebDriverManager 6.3.4 · TestNG 7.12.0 · RestAssured 6.0.1 · ExtentReports 5.1.2
+Java 21 · Maven · Selenium WebDriver 4.45.0 · WebDriverManager 6.3.4 · TestNG 7.12.0 · RestAssured 6.0.1 · ExtentReports 5.1.2 · Log4j2 2.26.0
 
 ## Design Pattern
 
@@ -23,11 +23,14 @@ GpiCalendarAutomation/
 ├── config.properties
 ├── report/ExtentReport.html
 └── src/
-    ├── main/java/org/example/
-    │   ├── pages/          (CalendarPage, InsuredDetailsPage)
-    │   ├── utils/           (ApiClient, ConfigReader, DriverManager, ExtentReportManager, TestListener, Utils)
-    │   └── BasePage.java
-    └── test/java/org/example/
+    ├── main/
+    │   ├── java/calendarautomation/
+    │   │   ├── pages/          (CalendarPage, InsuredDetailsPage)
+    │   │   ├── utils/           (ApiClient, ConfigReader, DriverManager, ExtentReportManager, TestListener, Utils)
+    │   │   └── BasePage.java
+    │   └── resources/
+    │       └── log4j2.xml
+    └── test/java/calendarautomation/
         ├── Tests/            (ApiTest, CalendarTest)
         └── BaseTest.java
 ```
@@ -62,7 +65,7 @@ Java 21, Maven, and Google Chrome installed.
 mvn clean test
 ```
 
-Runs the suite defined in `testNG.xml`. Report opens at `report/ExtentReport.html` afterward.
+Runs the suite defined in `testNG.xml`. Report opens at `report/ExtentReport.html` afterward. Console and file logs (`logs/test-execution.log`) are written via Log4j2.
 
 ## Configuration
 
