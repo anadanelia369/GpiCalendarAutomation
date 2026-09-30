@@ -8,10 +8,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CalendarPage extends BasePage {
+
+    private static final Logger logger = LogManager.getLogger(CalendarPage.class);
+
     @FindBy(id = "gpi-date-range-policy-input")
     private WebElement dateRangeInput;
 
@@ -27,12 +30,8 @@ public class CalendarPage extends BasePage {
     @FindBy(xpath = "//img[@alt='close icon']")
     private WebElement closeModalButton;
 
-    @FindBy(xpath = "//mg-date-range-control")
-    private WebElement dateRangeControl;
-
     @FindBy(xpath = "//button[@aria-label='Next month']")
     private WebElement nextMonthButton;
-
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -56,17 +55,20 @@ public class CalendarPage extends BasePage {
     public boolean isTodayHighlighted() {
         WebElement todayCell = driver.findElement(dateLocator(LocalDate.now()));
         waitForVisibility(todayCell);
-        return "date".equals(todayCell.getAttribute("aria-current"));
+        boolean highlighted = "date".equals(todayCell.getAttribute("aria-current"));
+        logger.debug("Today's date aria-current check result: {}", highlighted);
+        return highlighted;
     }
-
 
     public void selectDate(LocalDate date) {
         By locator = dateLocator(date);
         if (driver.findElements(locator).isEmpty()) {
+            logger.info("Target date {} not visible, navigating to next month", date);
             click(nextMonthButton);
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         click(driver.findElement(locator));
+        logger.info("Selected date: {}", date);
     }
 
     public String getDateRangeText() {
@@ -83,6 +85,7 @@ public class CalendarPage extends BasePage {
         waitForVisibility(closeModalButton);
         click(closeModalButton);
     }
+
     public void waitForUrlToContain(String partialUrl) {
         wait.until(ExpectedConditions.urlContains(partialUrl));
     }
@@ -94,11 +97,7 @@ public class CalendarPage extends BasePage {
 
     public void refreshPage() {
         driver.navigate().refresh();
+        logger.info("Page refreshed");
         waitForVisibility(dateRangeInput);
     }
-
-    public boolean isDateRangeInvalid() {
-        waitForVisibility(dateRangeControl);
-        return dateRangeControl.getAttribute("class").contains("ng-invalid");
-    }
-    }
+}
