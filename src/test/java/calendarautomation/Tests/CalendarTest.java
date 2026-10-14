@@ -93,6 +93,7 @@ public class CalendarTest extends BaseTest {
         calendarPage.selectDate(endDate);
 
         calendarPage.refreshPage();
-        Assert.assertTrue(calendarPage.isDateRangeInvalid());
+        Assert.assertTrue(calendarPage.getDateRangeText().isEmpty());
     }
+
 }
