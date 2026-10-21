@@ -1,5 +1,8 @@
 package calendarautomation.utils;
-
+import com.aventstack.extentreports.MediaEntityBuilder;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -22,8 +25,16 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        ExtentReportManager.getTest().fail("Test Failed: " + result.getThrowable());
         System.out.println("Test Failed: " + result.getName());
+        try {
+            WebDriver driver = DriverManager.getDriver();
+            String screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+            ExtentReportManager.getTest().fail("Test Failed: " + result.getThrowable(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot).build());
+        } catch (Exception e) {
+            ExtentReportManager.getTest().fail("Test Failed: " + result.getThrowable());
+            ExtentReportManager.getTest().warning("Screenshot could not be captured: " + e.getMessage());
+        }
     }
 
     @Override
